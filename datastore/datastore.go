@@ -2,8 +2,6 @@ package datastore
 
 import (
 	"database/sql"
-	"strconv"
-
 	"gofr.dev/pkg/errors"
 	"gofr.dev/pkg/gofr"
 
@@ -16,14 +14,14 @@ func New() *student {
 	return &student{}
 }
 
-func (s *student) GetByID(ctx *gofr.Context, id int) (*model.Student, error) {
+func (s *student) GetByID(ctx *gofr.Context, id string) (*model.Student, error) {
 	var resp model.Student
 
 	err := ctx.DB().QueryRowContext(ctx, " SELECT id,name,age,class FROM students where id=$1", id).
 		Scan(&resp.ID, &resp.Name, &resp.Age, &resp.Class)
 	switch err {
 	case sql.ErrNoRows:
-		return &model.Student{}, errors.EntityNotFound{Entity: "student", ID: strconv.Itoa(id)}
+		return &model.Student{}, errors.EntityNotFound{Entity: "student", ID: id}
 	case nil:
 		return &resp, nil
 	default:

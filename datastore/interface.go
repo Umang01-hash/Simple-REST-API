@@ -8,7 +8,7 @@ import (
 
 type Student interface {
 	// GetByID retrieves a student record based on its ID.
-	GetByID(ctx *gofr.Context, id int) (*model.Student, error)
+	GetByID(ctx *gofr.Context, id string) (*model.Student, error)
 	// Create inserts a new student record into the database.
 	Create(ctx *gofr.Context, model *model.Student) (*model.Student, error)
 	// Update updates an existing student record with the provided information.
